@@ -27,7 +27,9 @@ class ProductPage extends React.PureComponent {
     super(props);
     this.state = {
       images: [],
+      sizeWarning: false,
     };
+    this.handleSizeChange = this.handleSizeChange.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +69,22 @@ class ProductPage extends React.PureComponent {
     console.log(prevProps, "i am good");
 
     document.body.classList.remove("product-page");
+  }
+
+  handleSizeChange(evt) {
+    console.log(evt);
+    if (evt.target.value >= 6.5) {
+      this.props.productShopChange(evt.target.name, evt.target.value);
+      this.setState({
+        ...this.state,
+        sizeWarning: false,
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        sizeWarning: true,
+      });
+    }
   }
 
   render() {
@@ -179,11 +197,36 @@ class ProductPage extends React.PureComponent {
                         }
                         value={productShopData.size}
                         onInputChange={(name, value) => {
-                          productShopChange(name, value);
+                          if (value < 6.5) {
+                            productShopChange(name, value);
+                            this.setState({
+                              ...this.state,
+                              sizeWarning: true,
+                            });
+                          } else {
+                            productShopChange(name, value);
+                            this.setState({
+                              ...this.state,
+                              sizeWarning: false,
+                            });
+                          }
                         }}
+                        // onInputChange={(evt) => this.handleSizeChange(evt)}
                       />
+                      <div
+                        class="toast"
+                        role="alert"
+                        aria-live="assertive"
+                        aria-atomic="true"
+                      ></div>
                     </div>
                   ) : null}
+
+                  {this.state.sizeWarning === true && (
+                    <div class="alert alert-danger" role="alert">
+                      Size must be according to the given sizes
+                    </div>
+                  )}
 
                   <div className="item-actions">
                     {itemsInCart.includes(product._id) ? (
@@ -191,7 +234,7 @@ class ProductPage extends React.PureComponent {
                         disabled={
                           product.inventory <= 0 && !shopFormErrors["quantity"]
                         }
-                        text="Remove From Bag"
+                        text="yo From Bag"
                         className="bag-btn"
                         icon={<BagIcon />}
                         onClick={() => handleRemoveFromCart(product)}

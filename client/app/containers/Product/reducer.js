@@ -41,7 +41,7 @@ const initialState = {
   isLoading: false,
   productShopData: {
     quantity: 0,
-    size: 0,
+    size: 6.5,
   },
   taxableSelect: [
     { value: 1, label: "Yes" },
@@ -110,7 +110,7 @@ const productReducer = (state = initialState, action) => {
         product: action.payload,
         productShopData: {
           quantity: 1,
-          size: 0,
+          size: 6.5,
         },
         shopFormErrors: {},
       };
@@ -185,7 +185,7 @@ const productReducer = (state = initialState, action) => {
         ...state,
         productShopData: {
           quantity: 1,
-          size: 0,
+          size: 6.5,
         },
         shopFormErrors: {},
       };

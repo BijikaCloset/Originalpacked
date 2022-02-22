@@ -45,6 +45,7 @@ export const productShopChange = (name, value) => {
   if (name === "size") {
     // console.log("size is setting");
   }
+  console.log(formData);
 
   return {
     type: PRODUCT_SHOP_CHANGE,
