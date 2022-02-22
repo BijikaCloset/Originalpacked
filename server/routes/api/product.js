@@ -159,6 +159,53 @@ router.get("/item/:slug", (req, res) => {
     });
 });
 
+router.post("/item/getimages", (req, res) => {
+  console.log(req.body);
+
+  if (req.body.id) {
+    try {
+      Imagesproducts.findOne({ _id: req.body.id }, (err, data) => {
+        if (err) {
+          console.log(err);
+          return res.status(400).json({
+            error: "Your request could not be processed. Please try again.",
+          });
+        } else {
+          res.status(200).json({
+            images: data.images,
+          });
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({
+        error: "Your request could not be processed. Please try again.",
+      });
+    }
+  }
+  // const slug = req.params.slug;
+
+  // Product.findOne({ slug })
+  //   .populate("brand")
+  //   .exec((err, data) => {
+  //     if (err) {
+  //       return res.status(400).json({
+  //         error: "Your request could not be processed. Please try again.",
+  //       });
+  //     }
+
+  //     if (!data) {
+  //       return res.status(404).json({
+  //         message: "No product found.",
+  //       });
+  //     }
+
+  //     res.status(200).json({
+  //       product: data,
+  //     });
+  //   });
+});
+
 // fetch all products api
 router.get("/list", async (req, res) => {
   // Product.find({})

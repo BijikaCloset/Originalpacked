@@ -18,24 +18,54 @@ import { BagIcon } from "../../components/Icon";
 import NotFound from "../../components/NotFound";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import Crousal from "../../components/Crousal";
+import { fetchProductImages } from "../Product/actions";
 
 import "./style.css";
 
 class ProductPage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      images: [],
+    };
+  }
+
   componentDidMount() {
+    console.log("I am here 1 Mount");
     const slug = this.props.match.params.slug;
     this.props.fetchProduct(slug);
     document.body.classList.add("product-page");
   }
 
   componentDidUpdate(prevProps) {
+    console.log("I am here 2 Update");
     if (this.props.match.params.slug !== prevProps.match.params.slug) {
+      console.log("i am in if");
       const slug = this.props.match.params.slug;
       this.props.fetchProduct(slug);
     }
+    console.log(prevProps);
+
+    const getProductImages = async () => {
+      console.log("i am in function");
+      let res = await fetchProductImages({
+        id: prevProps.product.imagesproducts,
+      });
+      console.log(res);
+
+      this.setState({
+        images: res.data.images,
+      });
+    };
+
+    if (this.state.images.length === 0) {
+      getProductImages();
+    }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(prevProps) {
+    console.log(prevProps, "i am good");
+
     document.body.classList.remove("product-page");
   }
 
@@ -50,6 +80,20 @@ class ProductPage extends React.PureComponent {
       handleAddToCart,
       handleRemoveFromCart,
     } = this.props;
+
+    // if (product) {
+    //   console.log("i am in if");
+    //   const getProductImages = async () => {
+    //     console.log("i am in function");
+    //     let res = await fetchProductImages({ id: product.imagesproducts });
+    //     console.log(res);
+    //     this.setState({
+    //       images: res.data.images,
+    //     });
+    //   };
+
+    //   getProductImages();
+    // }
 
     function showProduct() {
       // console.log(product.brand.name);
@@ -73,7 +117,13 @@ class ProductPage extends React.PureComponent {
                   <p className="stock in-stock">In stock</p>
                 )}
               </div> */}
-              <Crousal image={product.image} />
+              <Crousal
+                image={
+                  this.state.images.length > 0
+                    ? this.state.images
+                    : product.image
+                }
+              />
             </Col>
             <Col xs="12" md="7" lg="7" className="mb-3">
               <div className="product-container">

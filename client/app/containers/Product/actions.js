@@ -139,6 +139,34 @@ export const fetchProduct = (slug) => {
   };
 };
 
+export const fetchProductImages = async (data) => {
+  // return async (dispatch, getState) => {
+  //   dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+
+  //   try {
+  //     const response = await axios.get(`/api/product/item/${slug}`);
+  //     console.log(response);
+
+  //     const inventory = response.data.product.quantity;
+  //     const product = { ...response.data.product, inventory };
+
+  //     dispatch({
+  //       type: FETCH_PRODUCT,
+  //       payload: product,
+  //     });
+  //   } catch (error) {
+  //     handleError(error, dispatch);
+  //   } finally {
+  //     dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+  //   }
+  // };
+
+  console.log(data);
+  let res = await axios.post(`/api/product/item/getimages`, data);
+  console.log(res);
+  return res;
+};
+
 export const handleProductSelect = (value) => {
   return {
     type: PRODUCT_SELECT,
