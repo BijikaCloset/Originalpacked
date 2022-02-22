@@ -230,6 +230,7 @@ export const addProduct = () => {
       // }
 
       const response = await axios.post(`/api/product/add`, newProduct);
+      console.log(response);
 
       const successfulOptions = {
         title: `${response.data.message}`,

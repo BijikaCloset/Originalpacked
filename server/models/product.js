@@ -19,6 +19,10 @@ const ProductSchema = new Schema({
     type: Array,
     required: true,
   },
+  imagesproducts: {
+    type: Schema.Types.ObjectId,
+    ref: "Imagesproducts",
+  },
   name: {
     type: String,
     trim: true,

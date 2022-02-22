@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Bring in Models & Helpers
 const Product = require("../../models/product");
+const Imagesproducts = require("../../models/images");
 const Brand = require("../../models/brand");
 const Category = require("../../models/category");
 const auth = require("../../middleware/auth");
@@ -14,7 +15,7 @@ router.post(
   // fileUpload.single("image"),
   auth,
   role.checkRole(role.ROLES.Admin),
-  (req, res) => {
+  async (req, res) => {
     const sku = req.body.sku;
     const name = req.body.name;
     const description = req.body.description;
@@ -22,7 +23,9 @@ router.post(
     const price = req.body.price;
     const taxable = req.body.taxable;
     const brand = req.body.brand;
-    const image = req.body.image;
+    const image = req.body.image[0];
+
+    console.log(image.length);
     // const key = req.file.key;
 
     // console.log(key);
@@ -73,7 +76,7 @@ router.post(
     //   }
     // });
 
-    Product.findOne({ sku }, (err, existingProduct) => {
+    await Product.findOne({ sku }, async (err, existingProduct) => {
       if (err) {
         return res.status(400).json({
           error: "Your request could not be processed. Please try again.",
@@ -84,32 +87,48 @@ router.post(
         return res.status(400).json({ error: "This sku is already in use." });
       }
 
-      const product = new Product({
-        sku,
-        name,
-        description,
-        quantity,
-        price,
-        taxable,
-        brand,
-        image,
+      const imagesData = new Imagesproducts({
+        images: req.body.image,
       });
 
-      // console.log(product);
-
-      product.save((err, data) => {
-        // console.log(data);
+      await imagesData.save(async (err, dataImages) => {
         if (err) {
+          console.log(err);
           return res.status(400).json({
             error: "Your request could not be processed. Please try again.",
           });
-        }
+        } else {
+          // console.log(dataImages);
 
-        res.status(200).json({
-          success: true,
-          message: `Product has been added successfully!`,
-          product: data,
-        });
+          const product = new Product({
+            sku,
+            name,
+            description,
+            quantity,
+            price,
+            taxable,
+            brand,
+            image,
+            imagesproducts: dataImages._id,
+          });
+
+          // console.log(product);
+
+          await product.save((err, data) => {
+            // console.log(data);
+            if (err) {
+              return res.status(400).json({
+                error: "Your request could not be processed. Please try again.",
+              });
+            }
+
+            res.status(200).json({
+              success: true,
+              message: `Product has been added successfully!`,
+              product: data,
+            });
+          });
+        }
       });
     });
   }
@@ -157,8 +176,8 @@ router.get("/list", async (req, res) => {
   //   });
   let products;
   try {
-    prodcuts = await Product.find({});
-    console.log(prodcuts);
+    products = await Product.find({});
+    // console.log(prodcuts);
   } catch (err) {
     console.log(err);
     res.json({
@@ -170,7 +189,7 @@ router.get("/list", async (req, res) => {
   }
 
   res.status(200).json({
-    products,
+    products: products,
   });
 });
 
