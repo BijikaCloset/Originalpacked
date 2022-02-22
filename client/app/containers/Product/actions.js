@@ -64,6 +64,7 @@ export const fetchProducts = (filter, slug) => {
 
     try {
       const response = await axios.get(`/api/product/list`);
+      console.log(response);
 
       dispatch({
         type: FETCH_PRODUCTS,

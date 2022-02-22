@@ -141,19 +141,37 @@ router.get("/item/:slug", (req, res) => {
 });
 
 // fetch all products api
-router.get("/list", (req, res) => {
-  Product.find({})
-    .populate("brand", "name")
-    .exec((err, data) => {
-      if (err) {
-        return res.status(400).json({
-          error: "Your request could not be processed. Please try again.",
-        });
-      }
-      res.status(200).json({
-        products: data,
-      });
+router.get("/list", async (req, res) => {
+  // Product.find({})
+  //   .populate("brand", "name")
+  //   .exec((err, data) => {
+  //     console.log(data);
+  //     if (err) {
+  //       return res.status(400).json({
+  //         error: "Your request could not be processed. Please try again.",
+  //       });
+  //     }
+  //     res.status(200).json({
+  //       products: data,
+  //     });
+  //   });
+  let products;
+  try {
+    prodcuts = await Product.find({});
+    console.log(prodcuts);
+  } catch (err) {
+    console.log(err);
+    res.json({
+      success: false,
+      data: err,
+      message: "Error fectching  prodcuts",
     });
+    return;
+  }
+
+  res.status(200).json({
+    products,
+  });
 });
 
 // fetch all products by category api
