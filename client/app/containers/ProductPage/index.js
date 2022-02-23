@@ -229,7 +229,7 @@ class ProductPage extends React.PureComponent {
                   )}
 
                   <div className="item-actions">
-                    {itemsInCart.includes(product._id) ? (
+                    {/* {itemsInCart.includes(product._id) ? (
                       <Button
                         disabled={
                           product.inventory <= 0 && !shopFormErrors["quantity"]
@@ -249,7 +249,7 @@ class ProductPage extends React.PureComponent {
                         icon={<BagIcon />}
                         onClick={() => handleAddToCart(product)}
                       />
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>
