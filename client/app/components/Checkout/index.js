@@ -50,9 +50,10 @@ const Checkout = (props) => {
         return response;
       };
 
-      const yoo = apiResponse();
+      // const yoo = apiResponse();
+      apiResponse();
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
 
