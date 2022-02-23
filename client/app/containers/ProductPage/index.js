@@ -228,29 +228,32 @@ class ProductPage extends React.PureComponent {
                     </div>
                   )}
 
-                  <div className="item-actions">
-                    {itemsInCart.includes(product._id) ? (
-                      <Button
-                        disabled={
-                          product.inventory <= 0 && !shopFormErrors["quantity"]
-                        }
-                        text="yo From Bag"
-                        className="bag-btn"
-                        icon={<BagIcon />}
-                        onClick={() => handleRemoveFromCart(product)}
-                      />
-                    ) : (
-                      <Button
-                        disabled={
-                          product.quantity <= 0 && !shopFormErrors["quantity"]
-                        }
-                        text="Add To Bag"
-                        className="bag-btn"
-                        icon={<BagIcon />}
-                        onClick={() => handleAddToCart(product)}
-                      />
-                    )}
-                  </div>
+                  {this.state.sizeWarning === false && (
+                    <div className="item-actions">
+                      {itemsInCart.includes(product._id) ? (
+                        <Button
+                          disabled={
+                            product.inventory <= 0 &&
+                            !shopFormErrors["quantity"]
+                          }
+                          text="yo From Bag"
+                          className="bag-btn"
+                          icon={<BagIcon />}
+                          onClick={() => handleRemoveFromCart(product)}
+                        />
+                      ) : (
+                        <Button
+                          disabled={
+                            product.quantity <= 0 && !shopFormErrors["quantity"]
+                          }
+                          text="Add To Bag"
+                          className="bag-btn"
+                          icon={<BagIcon />}
+                          onClick={() => handleAddToCart(product)}
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </Col>
