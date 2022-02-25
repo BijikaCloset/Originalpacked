@@ -43,6 +43,7 @@ const Checkout = (props) => {
 
       const apiResponse = async function successFunction() {
         const response = await axios.post("/api/user/successBuy", variables);
+        console.log(response);
 
         if (response.data.success === true) {
           placeOrder(cartTotal, cartItems);
