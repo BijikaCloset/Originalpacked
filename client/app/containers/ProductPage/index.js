@@ -260,27 +260,31 @@ class ProductPage extends React.PureComponent {
 
                     {this.state.sizeWarning === false && (
                       <div className="item-actions">
-                        {itemsInCart.includes(product._id) ? (
+                        {itemsInCart.includes(this.state.productData._id) ? (
                           <Button
                             disabled={
-                              product.inventory <= 0 &&
+                              this.state.productData.inventory <= 0 &&
                               !shopFormErrors["quantity"]
                             }
                             text="yo From Bag"
                             className="bag-btn"
                             icon={<BagIcon />}
-                            onClick={() => handleRemoveFromCart(product)}
+                            onClick={() =>
+                              handleRemoveFromCart(this.state.productData)
+                            }
                           />
                         ) : (
                           <Button
                             disabled={
-                              product.quantity <= 0 &&
+                              this.state.productData.quantity <= 0 &&
                               !shopFormErrors["quantity"]
                             }
                             text="Add To Bag"
                             className="bag-btn"
                             icon={<BagIcon />}
-                            onClick={() => handleAddToCart(product)}
+                            onClick={() =>
+                              handleAddToCart(this.state.productData)
+                            }
                           />
                         )}
                       </div>

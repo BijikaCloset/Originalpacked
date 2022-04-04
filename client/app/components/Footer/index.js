@@ -92,8 +92,7 @@ const Footer = () => {
           <br />
           <br />
           <div>
-            A Collaborative project by{" "}
-            <a href="http://www.aidataron.com/">AiDataRon</a>
+            A project by <a href="http://www.aidataron.com/">AiDataRon</a>
           </div>
         </div>
 
