@@ -59,26 +59,58 @@ export const toggleAddProduct = () => {
   };
 };
 
-export const fetchProducts = async (filter, slug) => {
-  console.log("triggered");
-  // return async (dispatch, getState) => {
-  //   dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+export const fetchProducts = (filter, slug) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
 
-  //   try {
-  //     const response = await axios.get(`/api/product/list`);
-  //     console.log(response, "check me");
+    try {
+      const response = await axios.get(`/api/product/listwithoutimages`);
+      console.log(response);
 
-  //     dispatch({
-  //       type: FETCH_PRODUCTS,
-  //       payload: response.data.products,
-  //     });
-  //     return response;
-  //   } catch (error) {
-  //     handleError(error, dispatch);
-  //   } finally {
-  //     dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
-  //   }
-  // };
+      dispatch({
+        type: FETCH_PRODUCTS,
+        payload: response.data.products,
+      });
+    } catch (error) {
+      handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+    }
+  };
+};
+
+// export const fetchProducts = async (filter, slug) => {
+//   console.log("triggered");
+//   return async (dispatch, getState) => {
+//     dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+
+//     try {
+//       const response = await axios.get(`/api/product/list`);
+//       console.log(response, "check me");
+
+//       dispatch({
+//         type: FETCH_PRODUCTS,
+//         payload: response.data.products,
+//       });
+//       return response;
+//     } catch (error) {
+//       handleError(error, dispatch);
+//     } finally {
+//       dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+//     }
+//   };
+//   // try {
+//   //   console.log("in try");
+//   //   const response = await axios.get(`/api/product/list`);
+//   //   console.log(response, "check me");
+
+//   //   return response.data.products;
+//   // } catch (err) {
+//   //   console.log(err);
+//   // }
+// };
+
+export const fetchGlobalProducts = async () => {
   try {
     console.log("in try");
     const response = await axios.get(`/api/product/list`);

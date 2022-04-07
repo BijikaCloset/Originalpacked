@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 // import { API_BASE_URL } from 'src/utils/API_URLS';
 // import { withRouter } from 'react-router';
 // import { toast } from "react-toastify";
-import { fetchProducts } from "../containers/Product/actions";
+import { fetchGlobalProducts } from "../containers/Product/actions";
 
 const ProductsContext = createContext({});
 
@@ -14,7 +14,7 @@ const ProductsProvider = (props) => {
   useEffect(() => {
     const getProducts = async () => {
       let slug = undefined;
-      let response = await fetchProducts(slug);
+      let response = await fetchGlobalProducts(slug);
       console.log(response, "i am response yoo");
       setProducts(response);
       setIsLoading(false);
