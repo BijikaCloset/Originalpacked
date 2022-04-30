@@ -12,7 +12,12 @@ import { Container } from "reactstrap";
 import Newsletter from "../../containers/Newsletter";
 
 const Footer = () => {
-  const infoLinks = [{ id: 0, name: "Contact Us", to: "/contact" }];
+  const infoLinks = [
+    { id: 0, name: "Contact Us", to: "/contact" },
+    { id: 1, name: "Privacy Policy", to: "/privacy" },
+    { id: 2, name: "Shipping Policy", to: "/shipping" },
+    { id: 3, name: "Return Policy", to: "/return" },
+  ];
 
   const footerBusinessLinks = (
     <ul className="support-links">
